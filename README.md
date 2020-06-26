@@ -28,83 +28,91 @@ Visit [Docker Hub][3] to see all available tags.
 
 ## Run
 
+We are use sudo !!!
 Simple run this container is:
 ```sh
-$ sudo docker run -d \
-    --name=support-tor-transport \
-    -v /srv/support-tor-transport/cfg:/etc/tor \
-    -v /srv/support-tor-transport/data:/var/lib/tor \
-    talex/support-tor-transport
+$ sudo docker run -d talex/support-tor-transport
 ```
-This start `tor`-core with config
-in `/srv/support-tor-transport/cfg` and data
-in `/srv/support-tor-transport/data` persistent volumes.
-
-If you want to add parameters for `tor`-core, 
-you just need to add the line in `torrc` config file.
-You must to create config file if it not exist.
-And to set as data directory and set owner
-of `/srv/support-tor-transport/data` to UID and GID 100.
-
-```sh
-$ sudo mkdir -p /srv/support-tor-transport/cfg \
-    /srv/support-tor-transport/data
-$ echo "DataDirectory /var/lib/tor" | sudo \
-    tee --append /srv/support-tor-transport/cfg/torrc
-$ sudo chown 100:100 /srv/support-tor-transport/data
-```
+This start `tor`-core with default empty config
+in the container directory `/etc/tor/`.
 
 
 ## Samples
 
-### SOCKS Proxy
+### Transport configuration as a SOCKS-proxy
 
-To use as socks proxy just 
-set SOCKSPort in config 
-file `/srv/support-tor-transport/cfg/torrc`
+To use as a socks proxy just set SOCKSPort in 
+config file.
+If you want to add parameters for `tor`-core, then 
+you just need to add the line in `/etc/tor/torrc` 
+config file in persistent volume and mount it.
+```sh
+$ sudo mkdir -p /srv/support-tor-transport
+$ echo "SOCKSPort 0.0.0.0:1080" | sudo \
+    tee --append /srv/support-tor-transport/torrc
 ```
-SOCKSPort 0.0.0.0:1080
-DataDirectory /var/lib/tor
-```
-and run:
+please, use 0.0.0.0 as your ip and any of the following 
+443, 80, 8080, 1080, 1081, 9050, 9051, 9150, 9151 as 
+a port and run:
 ```sh
 $ sudo docker run -d \
-    --name=support-tor-transport \
-    -p 127.0.0.1:1080:1080 \
-    -v /srv/support-tor-transport/cfg:/etc/tor \
-    -v /srv/support-tor-transport/data:/var/lib/tor \
+    --name=support-tor-transport-1081 \
+    -p 127.0.0.1:1081:1080 \
+    -v /srv/support-tor-transport:/etc/tor \
     talex/support-tor-transport
 ```
-Set `127.0.0.1:1080` as socks proxy in your browser,
+Set `127.0.0.1:1081` as socks proxy in your browser,
 and go to https://check.torproject.org/ to check
 if you are using the Tor network (or any network).
+```sh
+$ curl --socks5-hostname 127.0.0.1:1081 \
+    https://check.torproject.org/
+$ curl --socks5-hostname 127.0.0.1:1081 \
+    https://ifconfig.me
+```
 
-
-### Hidden Tor-Services
+### Transport data exchange using Hidden Tor-Services as an example
 
 To use as hidden tor-services server just 
-set parameters in config 
-file `/srv/support-tor-transport/cfg/torrc`
+set parameters in config file
 ```
-SOCKSPort 0
-DataDirectory /var/lib/tor
-HiddenServiceDir /var/lib/tor/mail.com/
+HiddenServiceDir /etc/tor/mail.com/
 HiddenServicePort 80  82.165.229.87:80
 HiddenServicePort 443 82.165.229.87:443
 ```
+If you want to add or retrieve parameters for/from 
+`tor`-core, then you just need mounted persistent 
+volume and add the parameter line in `/etc/tor/torrc` 
+config file. You must to create files/folders in 
+persistent volume and set owner to UID and GID 100.
+```sh
+$ sudo mkdir -p /srv/support-tor-transport \
+    /srv/support-tor-transport/mail.com
+$ sudo chown 100:100 \
+    /srv/support-tor-transport/mail.com
+$ sudo chmod 700 \
+    /srv/support-tor-transport/mail.com
+$ sudo tee /srv/support-tor-transport/torrc << EOF
+SOCKSPort 0
+HiddenServiceDir /etc/tor/mail.com/
+HiddenServicePort 80  82.165.229.87:80
+HiddenServicePort 443 82.165.229.87:443
+Log notice stdout
+EOF
+$
+```
 and run:
 ```sh
 $ sudo docker run -d \
-    --name=support-tor-transport \
-    -v /srv/support-tor-transport/cfg:/etc/tor \
-    -v /srv/support-tor-transport/data:/var/lib/tor \
+    --name=support-tor-transport-mc \
+    -v /srv/support-tor-transport:/etc/tor \
     talex/support-tor-transport
 ```
 
 
 ## Manual builds
 
-We use sudo !!!
+We are use sudo !!!
 ```sh
 $ git ....
 $ cd components/transport/support-tor

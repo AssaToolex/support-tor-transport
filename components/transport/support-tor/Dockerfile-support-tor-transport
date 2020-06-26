@@ -4,7 +4,6 @@ FROM alpine:${ALPINE_VERSION}
 
 LABEL maintainer="Assa.Toolex@gmail.com"
 
-
 RUN \
   apk -U --no-progress upgrade && \
   apk -U --no-progress add \
@@ -12,9 +11,9 @@ RUN \
   && \
   echo "Done."
 
-EXPOSE 9001 9050
+VOLUME /etc/tor
 
-VOLUME [ "/etc/tor", "/var/lib/tor" ]
+EXPOSE 443 80 8080 1080 1081 9050 9051 9150 9151
 
 USER tor
 
