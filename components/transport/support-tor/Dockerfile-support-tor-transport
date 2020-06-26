@@ -1,8 +1,15 @@
+ARG ALPINE_VERSION=latest
+
 FROM alpine:${ALPINE_VERSION}
+
+LABEL maintainer="Assa.Toolex@gmail.com"
+
 
 RUN \
   apk -U --no-progress upgrade && \
-  apk -U --no-progress add tor && \
+  apk -U --no-progress add \
+    tor \
+  && \
   echo "Done."
 
 EXPOSE 9001 9050
