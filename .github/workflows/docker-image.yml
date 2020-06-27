@@ -1,0 +1,36 @@
+name: DockerHUB Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build-alpine-latest:
+
+    runs-on: alpine-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image for Alpine latest
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+  build-alpine-3.12:
+
+    runs-on: alpine-3.12
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image for Alpine 3.12
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+  
+  build-alpine-3.9:
+
+    runs-on: alpine-3.9
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image for Alpine 3.9
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
