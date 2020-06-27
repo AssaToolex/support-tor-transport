@@ -1,7 +1,8 @@
 
-# TOR-transport
+# Support TOR-transport
 
 [![GitHubCI](https://github.com/-/-.svg?style=svg)](https://github.com/-/-/talex/support-tor-transport)
+[![DockerHubCI](https://dockerhub.com/-/-.svg?style=svg)](https://dockerhub.com/-/-/talex/support-tor-transport)
 
 (c) 2014-2020 Assa Toolex
 
@@ -108,27 +109,13 @@ $ sudo docker run -d \
     -v /srv/support-tor-transport:/etc/tor \
     talex/support-tor-transport
 ```
-
-
-## Manual builds
-
-We are use sudo !!!
+Get `onion`-name:
 ```sh
-$ git ....
-$ cd components/transport/support-tor
-$ make docker-build
-...
-Successfully built 043d94ecce48
-Successfully tagged talex/support-tor-transport:latest
+$ sudo cat /srv/support-tor-transport/mail.com/hostname
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.onion
 ```
-
-
-## Manual push to dockerhub
-
-We use sudo !!!
+Check, how it work:
 ```sh
-$ git ....
-$ cd components/transport/support-tor
-$ make docker-build
-$ DOCKERHUB_USERNAME=user DOCKERHUB_PASSWORD=pwd CIRCLE_TAG=new make dockerhub-push
+$ curl --socks5-hostname 127.0.0.1:1081 \
+    https://`sudo cat /srv/support-tor-transport/mail.com/hostname`
 ```
