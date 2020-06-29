@@ -1,8 +1,22 @@
-ALPINE_VERSION := latest
-DOCKER_ORGANIZATION := talex
-DOCKER_IMAGE := support-tor-transport
-DOCKER_IMAGE_VERSION := latest
-DOCKER_IMAGE_FILENAME ?= $(DOCKER_ORGANIZATION)_$(DOCKER_IMAGE).tar
+#
+#
+#
+
+ifndef ALPINE_VERSION
+	ALPINE_VERSION := latest
+endif
+ifndef DOCKER_ORGANIZATION
+	DOCKER_ORGANIZATION := talex
+endif
+ifndef DOCKER_IMAGE
+	DOCKER_IMAGE := support-tor-transport
+endif
+ifndef DOCKER_IMAGE_VERSION
+	DOCKER_IMAGE_VERSION := latest
+endif
+ifndef DOCKER_IMAGE_FILENAME
+	DOCKER_IMAGE_FILENAME ?= $(DOCKER_ORGANIZATION)_$(DOCKER_IMAGE).tar
+endif
 
 all: docker-build docker-test
 
