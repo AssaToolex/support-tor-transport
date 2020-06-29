@@ -9,8 +9,8 @@ $ git ....
 $ cd components/transport/support-tor
 $ make docker-build
 ...
-Successfully built 043d94e41e48
-Successfully tagged talex/support-tor-transport:latest
+Successfully built 043094e41e48
+Successfully tagged user/support-tor-transport:latest
 ```
 
 

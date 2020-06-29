@@ -1,5 +1,5 @@
 #
-#
+# supermaker
 #
 
 ifndef ALPINE_VERSION
@@ -39,11 +39,11 @@ endif
 
 dockerhub-push: check-dockerhub-env
 	@echo "${DOCKERHUB_PASSWORD}" | sudo docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
-	sudo docker push $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION)
 ifdef CIRCLE_TAG
 	sudo docker tag $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION) $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):${CIRCLE_TAG}
 	sudo docker push $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):${CIRCLE_TAG}
 endif
+	sudo docker push $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION)
 	echo "clear credentials..."
 	sudo docker logout
 
