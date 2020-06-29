@@ -1,8 +1,7 @@
 
 # Support TOR-transport
 
-[![GitHubCI](https://github.com/-/-.svg?style=svg)](https://github.com/-/-/talex/support-tor-transport)
-[![DockerHubCI](https://dockerhub.com/-/-.svg?style=svg)](https://dockerhub.com/-/-/talex/support-tor-transport)
+[![DockerHUB Image CI](https://github.com/AssaToolex/support-tor-transport/workflows/DockerHUB%20Image%20CI/badge.svg)](https://hub.docker.com/r/talex/support-tor-transport)
 
 (c) 2014-2020 Assa Toolex
 
