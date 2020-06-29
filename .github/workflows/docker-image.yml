@@ -18,7 +18,7 @@ jobs:
       working-directory: components/transport/support-tor
       run: |
         ALPINE_VERSION=latest DOCKER_ORGANIZATION=talex DOCKER_IMAGE=support-tor-transport \
-        DOCKER_IMAGE_VERSION=stage-alpine-latest CIRCLE_TAG=$(date +%sy%Y) \
+        DOCKER_IMAGE_VERSION=stage-alpine-latest CIRCLE_TAG=$(date +%sy%Y)-alpine-latest \
         DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }} DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }} \
         make docker-build docker-test dockerhub-push
 
@@ -26,7 +26,7 @@ jobs:
       working-directory: components/transport/support-tor
       run: |
         ALPINE_VERSION=3.12 DOCKER_ORGANIZATION=talex DOCKER_IMAGE=support-tor-transport \
-        DOCKER_IMAGE_VERSION=stage-alpine-3.12 CIRCLE_TAG=$(date +%sy%Y) \
+        DOCKER_IMAGE_VERSION=stage-alpine-3.12 CIRCLE_TAG=$(date +%sy%Y)-alpine-3.12 \
         DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }} DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }} \
         make docker-build docker-test dockerhub-push
 
@@ -34,6 +34,6 @@ jobs:
       working-directory: components/transport/support-tor
       run: |
         ALPINE_VERSION=3.9 DOCKER_ORGANIZATION=talex DOCKER_IMAGE=support-tor-transport \
-        DOCKER_IMAGE_VERSION=stage-alpine-3.09 CIRCLE_TAG=$(date +%sy%Y) \
+        DOCKER_IMAGE_VERSION=stage-alpine-3.09 CIRCLE_TAG=$(date +%sy%Y)-alpine-3.09 \
         DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }} DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }} \
         make docker-build docker-test dockerhub-push

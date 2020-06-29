@@ -32,7 +32,7 @@ Visit [Docker Hub][3] to see all available tags.
 We are use sudo !!!
 Simple run this container is:
 ```sh
-$ sudo docker run -d talex/support-tor-transport
+$ sudo docker run -d talex/support-tor-transport:stage-alpine-latest
 ```
 This start `tor`-core with default empty config
 in the container directory `/etc/tor/`.
@@ -60,7 +60,7 @@ $ sudo docker run -d \
     --name=support-tor-transport-1081 \
     -p 127.0.0.1:1081:1080 \
     -v /srv/support-tor-transport:/etc/tor \
-    talex/support-tor-transport
+    talex/support-tor-transport:stage-alpine-latest
 ```
 Set `127.0.0.1:1081` as socks proxy in your browser,
 and go to https://check.torproject.org/ to check
@@ -107,7 +107,7 @@ and run:
 $ sudo docker run -d \
     --name=support-tor-transport-mc \
     -v /srv/support-tor-transport:/etc/tor \
-    talex/support-tor-transport
+    talex/support-tor-transport:stage-alpine-latest
 ```
 Get `onion`-name:
 ```sh
