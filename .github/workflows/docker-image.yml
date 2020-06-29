@@ -8,32 +8,29 @@ on:
 
 jobs:
 
-  build-alpine-latest:
+  build-stage-alpine-latest:
 
     runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image for Alpine latest in 2020 year
+    - name: Build the Docker stage-image for Alpine latest
       working-directory: components/transport/support-tor
-      run: ALPINE_VERSION=latest CIRCLE_TAG=$(date +%s)y20 make docker-build
+      run: |
+        ALPINE_VERSION=latest DOCKER_ORGANIZATION=talex DOCKER_IMAGE=support-tor-transport \
+        DOCKER_IMAGE_VERSION=stage CIRCLE_TAG=$(date +%sy%Y) \
+        make docker-build docker-test
 
-  build-alpine-3_12:
-
-    runs-on: ubuntu-18.04
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image for Alpine 3.12 in 2020 year
+    - name: Build the Docker stage-image for Alpine 3.12
       working-directory: components/transport/support-tor
-      run: ALPINE_VERSION=3.12 CIRCLE_TAG=$(date +%s)y20 make docker-build
-  
-  build-alpine-3_9:
+      run: |
+        ALPINE_VERSION=3.12 DOCKER_ORGANIZATION=talex DOCKER_IMAGE=support-tor-transport \
+        DOCKER_IMAGE_VERSION=stage CIRCLE_TAG=$(date +%sy%Y) \
+        make docker-build docker-test
 
-    runs-on: ubuntu-18.04
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image for Alpine 3.9 in 2020 year
+    - name: Build the Docker stage-image for Alpine 3.9
       working-directory: components/transport/support-tor
-      run: ALPINE_VERSION=3.9 CIRCLE_TAG=$(date +%s)y20 make docker-build
+      run: |
+        ALPINE_VERSION=3.9 DOCKER_ORGANIZATION=talex DOCKER_IMAGE=support-tor-transport \
+        DOCKER_IMAGE_VERSION=stage CIRCLE_TAG=$(date +%sy%Y) \
+        make docker-build docker-test
