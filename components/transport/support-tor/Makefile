@@ -14,22 +14,20 @@ endif
 ifndef DOCKER_IMAGE_VERSION
 	DOCKER_IMAGE_VERSION := latest
 endif
-ifndef DOCKER_IMAGE_FILENAME
-	DOCKER_IMAGE_FILENAME ?= $(DOCKER_ORGANIZATION)_$(DOCKER_IMAGE).tar
-endif
+DOCKER_IMAGE_FILENAME ?= $(DOCKER_ORGANIZATION)_$(DOCKER_IMAGE)_$(DOCKER_IMAGE_VERSION).tar
 
 all: docker-build docker-test
 
 docker-build:
-	sudo docker build -t $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE) -f Dockerfile-support-tor-transport  --build-arg ALPINE_VERSION=$(ALPINE_VERSION) .
+	sudo docker build -t $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION) -f Dockerfile-support-tor-transport --build-arg ALPINE_VERSION=$(ALPINE_VERSION) .
 
 docker-test:
-	sudo docker image inspect $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE)
-	sudo docker run --rm $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE) --version
+	sudo docker image inspect $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION)
+	sudo docker run --rm $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION) --version
 
 docker-save:
-	sudo docker image inspect $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE) > /dev/null 2>&1
-	sudo docker save -o $(DOCKER_IMAGE_FILENAME) $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE)
+	sudo docker image inspect $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION) > /dev/null 2>&1
+	sudo docker save -o $(DOCKER_IMAGE_FILENAME) $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION)
 
 check-dockerhub-env:
 ifndef DOCKERHUB_USERNAME
