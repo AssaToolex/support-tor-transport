@@ -49,12 +49,14 @@ endif
 
 dockerhub-push-alpine-latest:
 	@echo "${DOCKERHUB_PASSWORD}" | sudo docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+	sudo docker tag $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION) $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):alpine-latest
 	sudo docker push $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):alpine-latest
 	echo "clear credentials..."
 	sudo docker logout
 
 dockerhub-push-latest:
 	@echo "${DOCKERHUB_PASSWORD}" | sudo docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+	sudo docker tag $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):$(DOCKER_IMAGE_VERSION) $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):latest
 	sudo docker push $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):latest
 	echo "clear credentials..."
 	sudo docker logout
