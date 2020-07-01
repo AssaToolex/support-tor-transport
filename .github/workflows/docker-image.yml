@@ -20,7 +20,7 @@ jobs:
         ALPINE_VERSION=latest DOCKER_ORGANIZATION=talex DOCKER_IMAGE=support-tor-transport \
         DOCKER_IMAGE_VERSION=stage-alpine-latest CIRCLE_TAG=$(date +%sy%Y)-alpine-latest \
         DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }} DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }} \
-        make docker-build docker-test dockerhub-push
+        make docker-build docker-test dockerhub-push dockerhub-push-alpine-latest dockerhub-push-latest
 
     - name: Build the Docker stage-image for Alpine 3.12
       working-directory: components/transport/support-tor

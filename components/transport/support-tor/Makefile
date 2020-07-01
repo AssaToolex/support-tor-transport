@@ -47,6 +47,18 @@ endif
 	echo "clear credentials..."
 	sudo docker logout
 
+dockerhub-push-alpine-latest:
+	@echo "${DOCKERHUB_PASSWORD}" | sudo docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+	sudo docker push $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):alpine-latest
+	echo "clear credentials..."
+	sudo docker logout
+
+dockerhub-push-latest:
+	@echo "${DOCKERHUB_PASSWORD}" | sudo docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+	sudo docker push $(DOCKER_ORGANIZATION)/$(DOCKER_IMAGE):latest
+	echo "clear credentials..."
+	sudo docker logout
+
 docker-load:
 ifneq ($(wildcard $(DOCKER_IMAGE_FILENAME)),)
 	sudo docker load -i $(DOCKER_IMAGE_FILENAME)
